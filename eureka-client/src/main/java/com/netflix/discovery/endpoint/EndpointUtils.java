@@ -64,6 +64,7 @@ public class EndpointUtils {
 
     /**
      * Get the list of all eureka service urls for the eureka client to talk to.
+     * 获取所有eureka服务url地址
      *
      * @param clientConfig the clientConfig to use
      * @param zone the zone in which the client resides

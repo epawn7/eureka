@@ -243,18 +243,22 @@ class AcceptorExecutor<ID, T> {
 
         private void drainReprocessQueue() {
             long now = System.currentTimeMillis();
+            //重新执行队列不为空且等待队列未满
             while (!reprocessQueue.isEmpty() && !isFull()) {
                 TaskHolder<ID, T> taskHolder = reprocessQueue.pollLast();
                 ID id = taskHolder.getId();
                 if (taskHolder.getExpiryTime() <= now) {
+                    //任务过期
                     expiredTasks++;
                 } else if (pendingTasks.containsKey(id)) {
                     overriddenTasks++;
                 } else {
+                    //重新加入执行队列的第一个位置
                     pendingTasks.put(id, taskHolder);
                     processingOrder.addFirst(id);
                 }
             }
+            //如果pendingTasks队列满了,队列溢出任务数增加,重新执行队列清空
             if (isFull()) {
                 queueOverflows += reprocessQueue.size();
                 reprocessQueue.clear();
@@ -262,6 +266,7 @@ class AcceptorExecutor<ID, T> {
         }
 
         private void appendTaskHolder(TaskHolder<ID, T> taskHolder) {
+            //如果执行队列满了,移除队列中最前面的
             if (isFull()) {
                 pendingTasks.remove(processingOrder.poll());
                 queueOverflows++;

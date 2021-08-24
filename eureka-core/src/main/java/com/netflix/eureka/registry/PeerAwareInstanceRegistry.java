@@ -34,6 +34,8 @@ public interface PeerAwareInstanceRegistry extends InstanceRegistry {
      * Populates the registry information from a peer eureka node. This
      * operation fails over to other nodes until the list is exhausted if the
      * communication fails.
+     *
+     * 从对等eureka节点填充注册表信息。 如果通信失败，此操作将故障转移到其他节点，直到列表用完为止。
      */
     int syncUp();
 
@@ -43,6 +45,9 @@ public interface PeerAwareInstanceRegistry extends InstanceRegistry {
      * does not return registry information for a period specified in
      * {@link com.netflix.eureka.EurekaServerConfig#getWaitTimeInMsWhenSyncEmpty()}, if it cannot
      * get the registry information from the peer eureka nodes at start up.
+     *
+     * 检查是否允许注册表访问或服务器是否处于无法全部获取注册表信息的情况。
+     * 如果在启动时无法从对等 eureka 节点获取注册表信息，则服务器在 getWaitTimeInMsWhenSyncEmpty 指定的时间段内不会返回注册表信息。
      *
      * @return false - if the instances count from a replica transfer returned
      *         zero and if the wait time has not elapsed, otherwise returns true

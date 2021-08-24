@@ -125,6 +125,7 @@ public class EurekaBootStrap implements ServletContextListener {
      * Users can override to initialize the environment themselves.
      */
     protected void initEurekaEnvironment() throws Exception {
+        //todo 初始化eureka环境,暂时不知道作用
         logger.info("Setting the eureka configuration..");
 
         String dataCenter = ConfigurationManager.getConfigInstance().getString(EUREKA_DATACENTER);
